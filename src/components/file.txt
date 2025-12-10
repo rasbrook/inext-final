@@ -1,0 +1,59 @@
+// Generates bingo cards and returns a mapping { "1": card, "2": card, ... }
+
+const sampleNumbers = (min, max, count) => {
+    // create pool
+    const pool = [];
+    for (let n = min; n <= max; n++) pool.push(n);
+    // shuffle (Fisher-Yates)
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, count);
+};
+
+export const generateBingoCard = () => {
+    // columns ranges
+    const B = sampleNumbers(1, 15, 5);
+    const I = sampleNumbers(16, 30, 5);
+    const N = sampleNumbers(31, 45, 4); // center will be FREE
+    const G = sampleNumbers(46, 60, 5);
+    const O = sampleNumbers(61, 75, 5);
+
+    // build rows (5 rows x 5 columns)
+    const rows = Array.from({ length: 5 }, (_, r) => {
+        return [
+            String(B[r]).padStart(2, '0'),
+            String(I[r]).padStart(2, '0'),
+            '', // N column value or FREE
+            String(G[r]).padStart(2, '0'),
+            String(O[r]).padStart(2, '0')
+        ];
+    });
+
+    // insert N column values; middle is FREE
+    let nIdx = 0;
+    for (let r = 0; r < 5; r++) {
+        if (r === 2) rows[r][2] = 'FREE';
+        else {
+            rows[r][2] = String(N[nIdx]).padStart(2, '0');
+            nIdx++;
+        }
+    }
+    return rows;
+};
+
+/**
+ * generateAllCards(total = 150)
+ * returns an object: { "1": card, "2": card, ... }
+ * card is a 5x5 array of strings, with center 'FREE'
+ */
+export const generateAllCards = (total = 150) => {
+    const cards = {};
+    for (let i = 1; i <= total; i++) {
+        cards[String(i)] = generateBingoCard();
+    }
+    return cards;
+};
+
+export default generateAllCards;
