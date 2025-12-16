@@ -126,8 +126,8 @@ const Home = () => {
           src={smart}
           alt={isAr ? "استثمار ذكي" : "Smart resource management"}
           style={{
-            width: "30vw",
-            // maxWidth: 320,
+            width: "35vw",
+            minWidth: 350,
             borderRadius: "1.5rem",
             objectFit: "cover",
             boxShadow: "0 24px 80px rgba(15,23,42,0.9)",
