@@ -74,14 +74,7 @@ const About = () => {
           </div>
         </motion.div>
 
-        <motion.div
-          className="home-hero-visual"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-        >
-          <div ref={heroGlowRef} />
-        </motion.div>
+        
       </section>
 
       {/* WHO WE ARE */}
