@@ -2,12 +2,13 @@ import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import "./css/home.css";
 import smart from "../assets/vision.jpg";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -34,6 +35,38 @@ const Home = () => {
       ease: "sine.inOut",
       yoyo: true,
       repeat: -1,
+    });
+
+    // subtle parallax on hero text
+    ScrollTrigger.matchMedia({
+      "(min-width: 768px)": () => {
+        gsap.to(".home-hero-text", {
+          yPercent: -8,
+          scrollTrigger: {
+            trigger: ".home-hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      },
+    });
+
+    // glassy cards drifting slightly with scroll
+    gsap.utils.toArray(".home-section-card").forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { y: 16 },
+        {
+          y: -12,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
     });
   }, []);
 

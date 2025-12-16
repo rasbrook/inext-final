@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./css/home.css";
 import "./css/products.css";
 import { LanguageContext } from "../contexts/LanguageContext";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -21,6 +22,7 @@ const fadeUp = {
 const Products = () => {
   const { lang } = useContext(LanguageContext);
   const isAr = lang === "ar";
+  const navigate = useNavigate();
 
   const trackRef = useRef(null);
   const prevPercentageRef = useRef(0);
@@ -32,14 +34,51 @@ const Products = () => {
   const heroGlowRef = useRef(null);
 
   useGSAP(() => {
-    if (!heroGlowRef.current) return;
-    gsap.to(heroGlowRef.current, {
-      scale: 1.04,
-      rotate: 1.2,
-      duration: 4,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
+    if (heroGlowRef.current) {
+      gsap.to(heroGlowRef.current, {
+        scale: 1.04,
+        rotate: 1.2,
+        duration: 4,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+    }
+
+    // parallax drift for product cards
+    gsap.utils.toArray(".home-section-card").forEach((card) => {
+      gsap.fromTo(
+        card,
+        { y: 16 },
+        {
+          y: -12,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
+    });
+
+    // slight vertical motion for the gallery as you scroll past
+    ScrollTrigger.matchMedia({
+      "(min-width: 768px)": () => {
+        gsap.fromTo(
+          ".products-gallery",
+          { y: 24 },
+          {
+            y: -24,
+            scrollTrigger: {
+              trigger: ".products-gallery-section",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.2,
+            },
+          }
+        );
+      },
     });
   }, []);
 
@@ -83,7 +122,8 @@ const Products = () => {
     }
 
     const applyPercentage = (next) => {
-      next = Math.max(Math.min(next, 100), 0);
+      // allow panning left (negative) and limit how far we can scroll
+      next = Math.max(Math.min(next, 0), -100);
 
       gsap.to(track, {
         duration: 0.8,
@@ -107,7 +147,6 @@ const Products = () => {
       dismissHint();
       isDownRef.current = true;
       startXRef.current = e.clientX;
-      track.setPointerCapture && track.setPointerCapture(e.pointerId);
     };
 
     const onPointerMove = (e) => {
@@ -121,11 +160,8 @@ const Products = () => {
       applyPercentage(next);
     };
 
-    const onPointerUp = (e) => {
+    const onPointerUp = () => {
       isDownRef.current = false;
-      try {
-        track.releasePointerCapture && track.releasePointerCapture(e.pointerId);
-      } catch (err) {}
     };
 
     const onWheel = (e) => {
@@ -279,8 +315,8 @@ const Products = () => {
             </h2>
             <p className="home-hero-subtitle" style={{ margin: 0 }}>
               {isAr
-                ? "اسحب أفقيًا أو استخدم عجلة التمرير للتنقل عبر المعرض." 
-                : "Drag horizontally or use your trackpad/wheel to explore the gallery."}
+                ? "اسحب أفقيًا أو اضغط على أي صورة في المعرض لعرض تفاصيل المنتج."
+                : "Drag horizontally or click any image in the gallery to view product details."}
             </p>
           </div>
           <Link to="/Contact">
@@ -303,43 +339,146 @@ const Products = () => {
             role="region"
             aria-label={isAr ? "معرض المنتجات" : "Product images"}
           >
-            <img
+            <motion.img
               className="image"
               src="https://cdn.pixabay.com/photo/2023/02/06/18/33/mixed-fruits-7772552_1280.jpg"
               draggable="false"
               alt="product 1"
+              onClick={() => navigate("/Products/1")}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                  "0 26px 70px rgba(0,0,0,0.7)",
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                delay: 0.1,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              whileHover={{ scale: 1.07, rotate: 1 }}
+              whileTap={{ scale: 0.96 }}
             />
-            <img
+            <motion.img
               className="image"
               src="https://sustainhealth.fit/wp-content/uploads/2024/06/Seed-oils.jpg"
               draggable="false"
               alt="product 2"
+              onClick={() => navigate("/Products/2")}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                  "0 26px 70px rgba(0,0,0,0.7)",
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                delay: 0.24,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              whileHover={{ scale: 1.07, rotate: -1 }}
+              whileTap={{ scale: 0.96 }}
             />
-            <img
+            <motion.img
               className="image"
               src="https://delicious-usa.com/wp-content/uploads/2021/07/Visuals-Pitch-5-1220x792.jpg"
               draggable="false"
               alt="product 3"
+              onClick={() => navigate("/Products/3")}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                  "0 26px 70px rgba(0,0,0,0.7)",
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                delay: 0.38,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              whileHover={{ scale: 1.07, rotate: 1 }}
+              whileTap={{ scale: 0.96 }}
             />
-            <img
+            <motion.img
               className="image"
               src="https://domf5oio6qrcr.cloudfront.net/medialibrary/11435/b3c65ed2-1c85-4f8f-9bd0-b3503d592ffe.jpg"
               draggable="false"
               alt="product 4"
+              onClick={() => navigate("/Products/4")}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                  "0 26px 70px rgba(0,0,0,0.7)",
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                delay: 0.52,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              whileHover={{ scale: 1.07, rotate: -1 }}
+              whileTap={{ scale: 0.96 }}
             />
-            <img
+            <motion.img
               className="image"
               src="https://news.okstate.edu/articles/agricultural-sciences-natural-resources/images/dietary_supplement_banner.jpg"
               draggable="false"
               alt="product 5"
-            />
-            <img
-              className="image"
-              src="https://news.okstate.edu/articles/agricultural-sciences-natural-resources/images/dietary_supplement_banner.jpg"
-              draggable="false"
-              alt="product 6"
+              onClick={() => navigate("/Products/5")}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                  "0 26px 70px rgba(0,0,0,0.7)",
+                  "0 18px 50px rgba(0,0,0,0.55)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                delay: 0.66,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              whileHover={{ scale: 1.07, rotate: 1 }}
+              whileTap={{ scale: 0.96 }}
             />
           </div>
+          <motion.div
+            className="products-click-hint"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
+          >
+            <span className="products-click-dot" />
+            {isAr ? "اضغط على صورة لعرض التفاصيل" : "Click an image for details"}
+          </motion.div>
           {showHint && (
             <div className="swipe-hint" ref={hintRef} aria-hidden>
               {isAr ? "اسحب أفقيًا" : "Swipe horizontally"}

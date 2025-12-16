@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import "./css/home.css";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -15,6 +20,25 @@ const fadeUp = {
 const Contact = () => {
   const { lang } = useContext(LanguageContext);
   const isAr = lang === "ar";
+
+  useGSAP(() => {
+    // parallax drift on contact cards
+    gsap.utils.toArray(".home-section-card").forEach((card) => {
+      gsap.fromTo(
+        card,
+        { y: 16 },
+        {
+          y: -10,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
+    });
+  }, []);
 
   return (
     <main className="home contact-page" dir={isAr ? "rtl" : "ltr"}>
@@ -90,7 +114,7 @@ const Contact = () => {
               whileTap={{ scale: 0.97 }}
               onClick={() => {
                 window.location.href =
-                  "mailto:hello@I next scope visionscopevision.example?subject=Partnership%20Request";
+                  "mailto:hello@Inextscopevision.example?subject=Partnership%20Request";
               }}
             >
               {isAr ? "إرسال طلب شراكة" : "Submit Partnership Request"}

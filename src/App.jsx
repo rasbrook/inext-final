@@ -5,6 +5,7 @@ import Header from './components/header/header'
 import LanguageProvider from './contexts/LanguageContext'
 import Contact from './pages/contact'
 import Products from './pages/products'
+import ProductDetail from './pages/productDetail'
 import gsap from 'gsap';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -28,9 +29,9 @@ function App() {
           CompanyColor={maincolor}
           backgroundcolor={'#000000d4'}
           color={maincolor}
-          mainstyle={{ backgroundImage: 'radial-gradient(circle at 150% , white, transparent)' }}
+          mainstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, transparent)' }}
           middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.8rem', marginTop: '0.5rem', fontWeight: 700 }}>I next scope vision</Link>}
-          dropdownstyle={{ backgroundImage: 'radial-gradient(circle at 150% , white, transparent)' }}
+          dropdownstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, transparent)' }}
         />
         <Routes>
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/Contact" element={<Contact />} />
           <Route path="*" element={<Home />} />
           <Route path="/Products" element={<Products />} />
+          <Route path="/Products/:id" element={<ProductDetail />} />
 
         </Routes>
 

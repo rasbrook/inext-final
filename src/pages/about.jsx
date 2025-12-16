@@ -2,11 +2,12 @@ import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import "./css/home.css";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 36 },
@@ -31,6 +32,23 @@ const About = () => {
       ease: "sine.inOut",
       yoyo: true,
       repeat: -1,
+    });
+
+    // scroll-based drift on cards
+    gsap.utils.toArray(".home-section-card").forEach((card) => {
+      gsap.fromTo(
+        card,
+        { y: 16 },
+        {
+          y: -12,
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
     });
   }, []);
 
