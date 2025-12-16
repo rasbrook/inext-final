@@ -16,7 +16,7 @@ const Contact = () => {
 
                     <section style={{ marginTop: 12 }}>
                         <h3>{isAr ? 'معلومات الاتصال' : 'Contact Details'}</h3>
-                        <p style={{ margin: 0 }}>{isAr ? 'البريد الإلكتروني: ' : 'Email: '}<a href="mailto:hello@inext.example">hello@inext.example</a></p>
+                        <p style={{ margin: 0 }}>{isAr ? 'البريد الإلكتروني: ' : 'Email: '}<a href="mailto:hello@i next scope vision.example">hello@i next scope vision.example</a></p>
                         <p style={{ margin: 0 }}>{isAr ? 'العنوان البريدي: ' : 'Postal Address: '}P.O Box 703215, Entebbe</p>
                         <p style={{ margin: 0 }}>{isAr ? 'أرقام الهاتف: ' : 'Phone(s): '}+971 544 513 745 — +966 595 646 657</p>
                         <p style={{ margin: 0 }}>{isAr ? 'تاريخ الانتهاء: ' : 'Expiry Date: '}2026-10-20</p>

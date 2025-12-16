@@ -45,7 +45,7 @@ const About = () => {
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <h1 className="home-hero-title">
-            {isAr ? "معلومات عنا - سكوب أسوشيتس" : "About Inext Scope Vision"}
+            {isAr ? "معلومات عنا - سكوب أسوشيتس" : "About i next scope vision Scope Vision"}
           </h1>
           <p className="home-hero-subtitle">
             {isAr
