@@ -23,13 +23,13 @@ function App() {
       <BrowserRouter>
 
         <Header
-          name="Inext"
+          name="i next scope vision"
           pages={['Home', "About", "Products", "Contact"]}
           CompanyColor={maincolor}
           backgroundcolor={'#000000d4'}
           color={maincolor}
           mainstyle={{ backgroundImage: 'radial-gradient(circle at 150% , white, transparent)' }}
-          middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.8rem', marginTop: '0.5rem', fontWeight: 700 }}>Inext</Link>}
+          middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.8rem', marginTop: '0.5rem', fontWeight: 700 }}>i next scope vision</Link>}
           dropdownstyle={{ backgroundImage: 'radial-gradient(circle at 150% , white, transparent)' }}
         />
         <Routes>
