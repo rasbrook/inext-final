@@ -14,6 +14,7 @@ const Header = (props) => {
         Home: 'الصفحة الرئيسية',
         About: 'معلومات عنا',
         Contact: 'اتصل',
+        Products: 'المنتجات',
         Donate: 'تبرع'
     }
 
