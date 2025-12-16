@@ -6,7 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { LanguageContext } from "../contexts/LanguageContext";
 import "./css/home.css";
-import smart from "../assets/vision.jpg";
+import i0 from "../assets/smartmoney.jpg";
+import i1 from '../assets/img1.jpg'
+import i2 from '../assets/mission.jpg'
+import i3 from '../assets/vision.jpg'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -20,6 +23,11 @@ const fadeUp = {
 };
 
 const Home = () => {
+  const images = [i0, i1, i2, i3];
+  let smart = Math.floor(Math.random() * images.length);
+  smart = images[smart];
+
+
   const { lang } = useContext(LanguageContext);
   const isAr = lang === "ar";
 
@@ -113,22 +121,22 @@ const Home = () => {
           </div>
         </motion.div>
 
-       
-            <motion.img
-              src={smart}
-              alt={isAr ? "استثمار ذكي" : "Smart resource management"}
-              style={{
-                width: "80%",
-                maxWidth: 320,
-                borderRadius: "1.5rem",
-                objectFit: "cover",
-                boxShadow: "0 24px 80px rgba(15,23,42,0.9)",
-              }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
-            />
-       
+
+        <motion.img
+          src={smart}
+          alt={isAr ? "استثمار ذكي" : "Smart resource management"}
+          style={{
+            width: "30vw",
+            // maxWidth: 320,
+            borderRadius: "1.5rem",
+            objectFit: "cover",
+            boxShadow: "0 24px 80px rgba(15,23,42,0.9)",
+          }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
+        />
+
       </section>
 
       {/* WHAT WE DO + APPROACH */}

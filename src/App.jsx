@@ -10,6 +10,7 @@ import gsap from 'gsap';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { maincolor } from './constants/color'
+import logo from './assets/inextlogo.jpg'
 
 
 
@@ -28,6 +29,7 @@ function App() {
           pages={['Home', "About", "Products", "Contact"]}
           CompanyColor={maincolor}
           backgroundcolor={'#000000d4'}
+          logo={logo}
           color={maincolor}
           mainstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, transparent)' }}
           middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.8rem', marginTop: '0.5rem', fontWeight: 700 }}>I next scope vision</Link>}
