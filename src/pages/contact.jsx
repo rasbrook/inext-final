@@ -53,8 +53,8 @@ const Contact = () => {
             <h4>{isAr ? "معلومات الاتصال" : "Contact Details"}</h4>
             <p>
               {isAr ? "البريد الإلكتروني: " : "Email: "}
-              <a href="mailto:hello@i next scope visionscopevision.example">
-                hello@i next scope visionscopevision.example
+              <a href="mailto:hello@I next scope visionscopevision.example">
+                hello@I next scope visionscopevision.example
               </a>
             </p>
             <p>
@@ -90,7 +90,7 @@ const Contact = () => {
               whileTap={{ scale: 0.97 }}
               onClick={() => {
                 window.location.href =
-                  "mailto:hello@i next scope visionscopevision.example?subject=Partnership%20Request";
+                  "mailto:hello@I next scope visionscopevision.example?subject=Partnership%20Request";
               }}
             >
               {isAr ? "إرسال طلب شراكة" : "Submit Partnership Request"}
