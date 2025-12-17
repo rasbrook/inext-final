@@ -32,8 +32,8 @@ function App() {
           logo={logo}
           color={maincolor}
           mainstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, transparent)' }}
-          middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.8rem', marginTop: '0.5rem', fontWeight: 700 }}>I next scope vision</Link>}
-          dropdownstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, transparent)' }}
+          middleelement={<Link to="/" style={{ color: maincolor, textDecoration: 'none', fontSize: '1.2rem', marginTop: '1rem', fontWeight: 700 }}>I next scope vision</Link>}
+          dropdownstyle={{ backgroundImage: 'radial-gradient(circle at 150% ,#1a1f38, 50%)' }}
         />
         <Routes>
 

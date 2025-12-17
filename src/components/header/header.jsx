@@ -136,9 +136,9 @@ const Header = (props) => {
 
                 {isOpen ? <motion.div className="dropdown"
                     style={{ ...props.dropdownstyle, position: 'fixed', top: '-100vh', width: 'contain' }}
-                    initial={{ opacity: 0, top: '-50vh' }}
+                    initial={{ opacity: 1, top: '-50vh' }}
                     animate={{ opacity: 1, top: '3.9em' }}
-                    exit={{ opacity: 0, top: '-50vh' }}
+                    exit={{ opacity: 1, top: '-50vh' }}
                     transition={{ duration: 0.5 }}
                 >
                     {props.Topofdropdown}
